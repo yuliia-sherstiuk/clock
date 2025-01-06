@@ -3,8 +3,7 @@ def afficher_heure(heures, minutes, secondes):
     """
     Affiche l'heure actuelle au format hh:mm:ss
     """
-    print(f"{heures:02}:{minutes:02}:{secondes:02}", end="\r"),end="\r" 
-# Fonction pour régler l'heure
+    print(f"{heures:02}:{minutes:02}:{secondes:02}", end="\r")
 def regler_heure(heure_tuple):
     
     heures, minutes, secondes = heure_tuple
