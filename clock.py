@@ -24,7 +24,8 @@ def update_time():
             current_time = (current_time[0] + 1 , 0 , 0)
         if current_time[0] == 24:
             current_time = (0 , 0 , 0)
-
+        check_alarm()
+        
 # Function that set the current time
 def set_time(new_time):
     global current_time
@@ -43,3 +44,25 @@ def check_alarm():
         print ("DRING DRING !!! Time to wake up !!!")
 
 
+# Get User input for time and alarm
+def user_input():
+    while True:
+        try:
+            new_time = input("Enter current time as (hh:mm:ss): ")
+            hours, minutes, seconds = [int(value) for value in new_time.split(':')]
+            set_time((hours, minutes, seconds))
+            alarm_time_input = input("Enter alarm time as (hh:mm:ss): ")
+            alarm_hours, alarm_minutes, alarm_seconds = [int(value) for value in alarm_time_input.split(':')]
+            set_alarm((alarm_hours, alarm_minutes, alarm_seconds))
+            break
+        except ValueError:
+            print("Invalid time format. Please enter time as  (hh:mm:ss): ")
+
+# Main function
+def main_loop():
+    user_input()
+    update_time()
+    check_alarm()
+
+
+main_loop()
