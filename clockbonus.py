@@ -15,20 +15,27 @@ alarm_time = None
 
 # Function that allow user to choose the time format
 def choose_time_format():
+    global time_choice
     while True:
-        format_choice = input ("Choose time format, enter 12 or 24 :")
+        format_choice = input ("Choose time format, enter 12 or 24 : ")
         if format_choice in ["12","24"]:
-            time_format = format_choice
+            time_choice = format_choice
         break
     else:
         print("Please enter 12 or 24")
 
 # Function that display the time in the right format
 def display_time(current_time):
-    hours = f"{current_time[0]:02}"
-    minutes = f"{current_time[1]:02}"
-    seconds = f"{current_time[2]:02}"
-    print(f"{hours} : {minutes} : {seconds}", end="\r")
+    if time_choice == "12" :
+        hours = current_time [0] % 12
+        hours = hours if hours != 0 else 12
+        am_pm = "AM" if current_time [0] < 12 else "PM"
+        print (f"{hours:02} : {current_time[1]:02} : {current_time[2]:02} {am_pm}" , end ="\r")
+    else:
+        hours = f"{current_time[0]:02}"
+        minutes = f"{current_time[1]:02}"
+        seconds = f"{current_time[2]:02}"
+        print(f"{hours} : {minutes} : {seconds}", end="\r")
 
 # Function that update the time every second
 def update_time():
@@ -79,9 +86,9 @@ def user_input():
 # Main function
 def main_loop():
     title()
+    choose_time_format()
     user_input()
     update_time()
     check_alarm()
-
 
 main_loop()
