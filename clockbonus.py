@@ -19,7 +19,7 @@ def choose_time_format():
     while True:
         format_choice = input ("Choose time format, enter 12 or 24 : ")
         if format_choice in ["12","24"]:
-            time_choice = int(format_choice)
+            time_choice = format_choice
             break
         print("Please enter 12 or 24")
 
@@ -29,7 +29,7 @@ def display_time(current_time):
         hours = current_time [0] % 12
         hours = hours if hours != 0 else 12
         am_pm = "AM" if current_time [0] < 12 else "PM"
-        print (f"{hours:02} : {current_time[1]:02} : {current_time[2]:02} {am_pm}" , end ="\r")
+        print (f"{hours:02} : {current_time[1]:02} : {current_time[2]:02}  {am_pm}" , end ="\r")
     else:
         hours = f"{current_time[0]:02}"
         minutes = f"{current_time[1]:02}"
