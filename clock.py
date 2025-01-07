@@ -1,5 +1,7 @@
 import time
-
+# Variables globales
+horloge_en_pause = False # La pause est désactivée par défaut
+is_12_hour_format = False  # Le format par défaut est 24 heures
 
 # Fonction pour afficher l'heure
 def afficher_heure(heures, minutes, secondes):
