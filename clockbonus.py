@@ -19,9 +19,8 @@ def choose_time_format():
     while True:
         format_choice = input ("Choose time format, enter 12 or 24 : ")
         if format_choice in ["12","24"]:
-            time_choice = format_choice
-        break
-    else:
+            time_choice = int(format_choice)
+            break
         print("Please enter 12 or 24")
 
 # Function that display the time in the right format
