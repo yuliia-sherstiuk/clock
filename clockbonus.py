@@ -4,13 +4,24 @@ def title():
     print(" ")  
     print(" " * 13, " THE CLOCK ", " " * 13)
     print(" ")
-    print("With this simple clock you can set the time and the alarm ")
+    print("With this simple clock you can set the time, ")
+    print("the alarm, choose the time format, and turn it on/off ")  
     print(" ")   
     print(" ")  
 
 # Initialize the variables
 current_time = (16, 30, 0)
 alarm_time = None
+
+# Function that allow user to choose the time format
+def choose_time_format():
+    while True:
+        format_choice = input ("Choose time format, enter 12 or 24 :")
+        if format_choice in ["12","24"]:
+            time_format = format_choice
+        break
+    else:
+        print("Please enter 12 or 24")
 
 # Function that display the time in the right format
 def display_time(current_time):
