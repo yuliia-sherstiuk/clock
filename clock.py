@@ -2,23 +2,18 @@ import time
 
 # Variables globales
 horloge_en_pause = False  # La pause est désactivée par défaut
+
+
+
 is_12_hour_format = False  # Le format par défaut est 24 heures
 
-# Fonction pour régler l'heure
-def regler_heure():
+# Fonction pour basculer entre le format 12h et 24h
+def basculer_format_affichage():
     """
-    Permet à l'utilisateur de régler l'heure manuellement.
+    Permet de basculer entre le format 12 heures et 24 heures pour l'affichage de l'heure.
     """
-    try:
-        heures = int(input("Entrez les heures (0-23) : "))
-        minutes = int(input("Entrez les minutes (0-59) : "))
-        secondes = int(input("Entrez les secondes (0-59) : "))
-        if not (0 <= heures < 24 and 0 <= minutes < 60 and 0 <= secondes < 60):
-            raise ValueError("Valeurs invalides pour l'heure.")
-        return heures, minutes, secondes
-    except ValueError as e:
-        print(e)
-        return regler_heure()  # Si les valeurs sont incorrectes, on redemande l'heure
+    global is_12_hour_format
+    is_12_hour_format = not is_12_hour_format  # Change le format d'affichage
 
 # Fonction pour afficher l'heure
 def afficher_heure(heures, minutes, secondes):
@@ -35,13 +30,21 @@ def afficher_heure(heures, minutes, secondes):
         # Si c'est le format 24h, on affiche l'heure directement
         print(f"{heures:02}:{minutes:02}:{secondes:02}", end="\r")
 
-# Fonction pour basculer entre le format 12h et 24h
-def basculer_format_affichage():
+# Fonction pour régler l'heure
+def regler_heure():
     """
-    Permet de basculer entre le format 12 heures et 24 heures pour l'affichage de l'heure.
+    Permet à l'utilisateur de régler l'heure manuellement.
     """
-    global is_12_hour_format
-    is_12_hour_format = not is_12_hour_format  # Change le format d'affichage
+    try:
+        heures = int(input("Entrez les heures (0-23) : "))
+        minutes = int(input("Entrez les minutes (0-59) : "))
+        secondes = int(input("Entrez les secondes (0-59) : "))
+        if not (0 <= heures < 24 and 0 <= minutes < 60 and 0 <= secondes < 60):
+            raise ValueError("Valeurs invalides pour l'heure.")
+        return heures, minutes, secondes
+    except ValueError as e:
+        print(e)
+        return regler_heure()  # Si les valeurs sont incorrectes, on redemande l'heure
 
 # Fonction pour mettre en pause ou reprendre l'horloge
 def basculer_pause_horloge():
@@ -72,6 +75,9 @@ def horloge(heures, minutes, secondes):
                 heures += 1
             if heures == 24:
                 heures = 0  # Si on atteint 24 heures, on recommence à 0
+
+
+
 
 if __name__ == "__main__":
     # Demander à l'utilisateur s'il veut le format 12h ou 24h
