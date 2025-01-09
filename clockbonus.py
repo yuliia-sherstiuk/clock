@@ -20,7 +20,7 @@ def choose_time_format():
         format_choice = input ("Choose time format, enter 12 or 24 : ")
         if format_choice in ["12","24"]:
             time_choice = format_choice
-            break
+            return
         print("Please enter 12 or 24")
 
 # Function that display the time in the right format
@@ -83,11 +83,11 @@ def user_input():
             print("Invalid time format. Please enter time as (hh:mm:ss): ")
 
 # Main function
-def main_function():
+def main():
     title()
     choose_time_format()
     user_input()
     update_time()
     check_alarm()
 
-main_function()
+main()

@@ -2,13 +2,11 @@ import time
 import threading
 
 def title():
-    print(" ")  
-    print(" " * 13, " THE CLOCK ", " " * 13)
-    print(" ")
-    print("With this simple clock you can set the time, ")
-    print("the alarm, choose the time format, and turn it on/off ")  
-    print(" ")   
-    print(" ")  
+    print("\n")  
+    print("\033[13C THE CLOCK ")
+    print("\n")
+    print("With this simple clock you can set the time,\nthe alarm, choose the time format, \nand turn it on/off  ")
+    print("\n")  
 
 # Initialize the variables
 current_time = (16, 30, 0)
@@ -73,7 +71,6 @@ def set_alarm(new_alarm_time):
 def check_alarm():
     if current_time == alarm_time:
         print("\n\033[s\033[3A\033[100D DRING DRING !!! Time to wake up !!! \033[u", end="", flush=True)
-        #print("\n DRING DRING !!! Time to wake up !!!")
 
 # Function to start the clock
 def start_clock():
@@ -95,14 +92,24 @@ def user_input():
     while True:
         try:
             new_time = input("Enter current time as (hh:mm:ss): ")
+            if not new_time:
+                raise ValueError("input cannot be empty")
             hours, minutes, seconds = [int(value) for value in new_time.split(":")]
+            if not (0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60):
+                raise ValueError("time values must be in the range\nhh(0-23), mm(0-59), ss(0-50)")
             print(f"The new time is: {set_time((hours, minutes, seconds))}")
+
             alarm_time_input = input("Enter alarm time as (hh:mm:ss): ")
+            if not alarm_time_input:
+                raise ValueError("input cannot be empty")
             alarm_hours, alarm_minutes, alarm_seconds = [int(value) for value in alarm_time_input.split(":")]
+            if not (0 <= alarm_hours < 24 and 0 <= alarm_minutes < 60 and 0 <= alarm_seconds < 60):
+                raise ValueError("alarm time values must be in the range\nhh(00-23), mm(0-59), ss(0-50)")
             set_alarm((alarm_hours, alarm_minutes, alarm_seconds))
             break
-        except ValueError:
-            print("Invalid time format. Please enter time as (hh:mm:ss): ")
+
+        except ValueError as error:
+            print(f"Invalid time format: {error}.")
 
 # Main function
 def main():
