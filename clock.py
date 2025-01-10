@@ -4,19 +4,19 @@ import threading
 # Variables globales
 horloge_en_pause = threading.Event()  
 horloge_en_pause.set()  
-is_12_hour_format = False  
+format_12_heures = False  
 alarme_reglee = False  
 heure_alarme = (0, 0, 0)  
 horloge_active = True  
 
 # Fonction de changement de format d'heure (12/24 heures)
 def basculer_format_affichage():
-    global is_12_hour_format
-    is_12_hour_format = not is_12_hour_format
+    global format_12_heures
+    format_12_heures = not format_12_heures
 
 # Fonction d'affichage de l'heure actuelle
 def afficher_heure(heures, minutes, secondes):
-    if is_12_hour_format:
+    if format_12_heures:
         suffix = "AM " if heures < 12 else "PM "
         heures_affiche = heures % 12 or 12
         print(f"\rl'heure {heures_affiche:02}:{minutes:02}:{secondes:02} {suffix}", end="")
@@ -30,10 +30,10 @@ def regler_heure():
         minutes = int(input("Entrez les minutes (0-59) : "))
         secondes = int(input("Entrez les seconds (0-59) : "))
         if not (0 <= heures < 24 and 0 <= minutes < 60 and 0 <= secondes < 60):
-            raise ValueError("ERROR.ERROR")
+            raise ValueError("ERREUR.ERREUR")
         return heures, minutes, secondes
-    except ValueError as e:
-        print(e)
+    except ValueError as erreur:
+        print(erreur)
         return regler_heure()
 # Fonction de réglage de l'alarme
 def regler_alarme():
@@ -43,12 +43,12 @@ def regler_alarme():
         minutes = int(input("Entrez les minutes de l'alarme (0-59) : "))
         secondes = int(input("Entrez les secondes de l'alarme (0-59) : "))
         if not (0 <= heures < 24 and 0 <= minutes < 60 and 0 <= secondes < 60):
-            raise ValueError("Error. Error")
+            raise ValueError("ERREUR. ERREUR")
         heure_alarme = (heures, minutes, secondes)
         alarme_reglee = True
         print(f"\n l'alarme {heures:02}:{minutes:02}:{secondes:02}")
-    except ValueError as e:
-        print(e)
+    except ValueError as erreur:
+        print(erreur)
         regler_alarme()
 
 # Vérification de l'heure de l'alarme
@@ -88,7 +88,7 @@ def horloge(heures, minutes, secondes):
 def gerer_interactions():
     global horloge_active
     while horloge_active:
-        print("\n Menu : \n (p) - pause/reprendre,\n (s) - stop")
+        print("\n Menu : \n (p) - pause/reprendre,\n (s) - Quitter le programme")
         choix = input(f"\n\033[s\033[1A\033[100DSélectionnez une option:\033[u ").lower()
        
         if choix == "p":  
@@ -104,22 +104,19 @@ def gerer_interactions():
             print("\n L'horloge s'est arrêtée.")
             break
 
+# fonction principale
 if __name__ == "__main__":
-    # Entrer le format de l'heure
+
     choix_format = input("Voulez-vous utiliser le format 12 heures ou 24 heures ? (12/24) : ")
     if choix_format == "12":
-        is_12_hour_format = True
+        format_12_heures = True
 
-    # Réglage de l'heure
     print("Réglage de l'heure...")
     heures, minutes, secondes = regler_heure()
 
-   # Demande de réglage de l'alarme immédiatement après le réglage de l'heure
     regler_alarme()
 
-    # Exécutez l'horloge dans un thread séparé
     thread_horloge = threading.Thread(target=horloge, args=(heures, minutes, secondes))
     thread_horloge.start()
 
-   # Lancer le menu pour le contrôle dans le thread principal
     gerer_interactions()
