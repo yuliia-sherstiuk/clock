@@ -107,10 +107,17 @@ def gerer_interactions():
 # fonction principale
 if __name__ == "__main__":
 
-    choix_format = input("Voulez-vous utiliser le format 12 heures ou 24 heures ? (12/24) : ")
-    if choix_format == "12":
-        format_12_heures = True
+    while True:
+        try:
+            choix_format = input("Voulez-vous utiliser le format 12 heures ou 24 heures ? (12/24) : ")
+            if choix_format not in ["12", "24"]:
+                raise ValueError("ERREUR. Vous devez entrer '12' ou '24'.")
+            format_12_heures = (choix_format == "12")
+            break
+        except ValueError as erreur:
+            print(erreur)
 
+            
     print("Réglage de l'heure...")
     heures, minutes, secondes = regler_heure()
 
